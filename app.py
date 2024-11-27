@@ -87,7 +87,7 @@ def app():
             st.success(f"{mbti_dict.get(mbti_type, ('Tipe tidak ditemukan dalam dictionary', 'Tidak ada deskripsi tersedia'))[1]}")
 
             # Menampilkan kemungkinan hasil lainnya
-            with st.expander("Kemungkinan hasil lainnya:"):
+            with st.expander("Other possible types:"):
                 for mbti_type, score in results[1:]:
                     st.write(f"{mbti_type} ({mbti_dict.get(mbti_type, ('Tipe tidak ditemukan dalam dictionary', 'Tidak ada deskripsi tersedia'))[0]}), Similarity Score: {score:.4f}")
 
