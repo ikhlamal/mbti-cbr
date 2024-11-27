@@ -46,24 +46,24 @@ def find_similar_personality(input_text, tfidf_matrix, df, top_n=5):
     
     return results
 
-# 4. Dictionary untuk kepanjangan MBTI
+# 4. Dictionary untuk kepanjangan MBTI dan deskripsi singkat
 mbti_dict = {
-    "INFJ": "Introversion, Intuition, Feeling, Judging",
-    "INFP": "Introversion, Intuition, Feeling, Perceiving",
-    "INTJ": "Introversion, Intuition, Thinking, Judging",
-    "INTP": "Introversion, Intuition, Thinking, Perceiving",
-    "ISFJ": "Introversion, Sensing, Feeling, Judging",
-    "ISFP": "Introversion, Sensing, Feeling, Perceiving",
-    "ISTJ": "Introversion, Sensing, Thinking, Judging",
-    "ISTP": "Introversion, Sensing, Thinking, Perceiving",
-    "ENFJ": "Extraversion, Intuition, Feeling, Judging",
-    "ENFP": "Extraversion, Intuition, Feeling, Perceiving",
-    "ENTJ": "Extraversion, Intuition, Thinking, Judging",
-    "ENTP": "Extraversion, Intuition, Thinking, Perceiving",
-    "ESFJ": "Extraversion, Sensing, Feeling, Judging",
-    "ESFP": "Extraversion, Sensing, Feeling, Perceiving",
-    "ESTJ": "Extraversion, Sensing, Thinking, Judging",
-    "ESTP": "Extraversion, Sensing, Thinking, Perceiving"
+    "INFJ": ("Introversion, Intuition, Feeling, Judging", "INFJs are insightful, empathetic, and deeply concerned about their relationships and the world."),
+    "INFP": ("Introversion, Intuition, Feeling, Perceiving", "INFPs are idealistic, introspective, and driven by their values."),
+    "INTJ": ("Introversion, Intuition, Thinking, Judging", "INTJs are strategic, determined, and highly independent thinkers."),
+    "INTP": ("Introversion, Intuition, Thinking, Perceiving", "INTPs are innovative, curious, and prefer abstract concepts over practical applications."),
+    "ISFJ": ("Introversion, Sensing, Feeling, Judging", "ISFJs are dedicated, practical, and quietly supportive individuals."),
+    "ISFP": ("Introversion, Sensing, Feeling, Perceiving", "ISFPs are artistic, spontaneous, and enjoy living in the moment."),
+    "ISTJ": ("Introversion, Sensing, Thinking, Judging", "ISTJs are responsible, organized, and value traditions."),
+    "ISTP": ("Introversion, Sensing, Thinking, Perceiving", "ISTPs are logical, analytical, and enjoy problem-solving."),
+    "ENFJ": ("Extraversion, Intuition, Feeling, Judging", "ENFJs are charismatic, supportive, and enjoy helping others grow."),
+    "ENFP": ("Extraversion, Intuition, Feeling, Perceiving", "ENFPs are enthusiastic, creative, and motivated by their passions."),
+    "ENTJ": ("Extraversion, Intuition, Thinking, Judging", "ENTJs are confident, assertive, and excel at leadership and organization."),
+    "ENTP": ("Extraversion, Intuition, Thinking, Perceiving", "ENTPs are inventive, curious, and excel at debating new ideas."),
+    "ESFJ": ("Extraversion, Sensing, Feeling, Judging", "ESFJs are warm, sociable, and driven by a desire to help others."),
+    "ESFP": ("Extraversion, Sensing, Feeling, Perceiving", "ESFPs are outgoing, fun-loving, and enjoy living in the present."),
+    "ESTJ": ("Extraversion, Sensing, Thinking, Judging", "ESTJs are organized, practical, and value order and structure."),
+    "ESTP": ("Extraversion, Sensing, Thinking, Perceiving", "ESTPs are energetic, adventurous, and excel in fast-paced environments.")
 }
 
 # 5. Streamlit User Interface
@@ -83,12 +83,13 @@ def app():
             
             # Menampilkan tipe MBTI pertama dengan highlight
             mbti_type, score = results[0]
-            st.success(f"**{mbti_type}** ({mbti_dict.get(mbti_type, 'Tipe tidak ditemukan dalam dictionary')}), Similarity Score: {score:.4f}")
+            st.success(f"**{mbti_type}** ({mbti_dict.get(mbti_type, ('Tipe tidak ditemukan dalam dictionary', 'Tidak ada deskripsi tersedia'))[0]}), Similarity Score: {score:.4f}")
+            st.success(f"{mbti_dict.get(mbti_type, ('Tipe tidak ditemukan dalam dictionary', 'Tidak ada deskripsi tersedia'))[1]}")
 
             # Menampilkan kemungkinan hasil lainnya
             with st.expander("Kemungkinan hasil lainnya:"):
                 for mbti_type, score in results[1:]:
-                    st.write(f"{mbti_type} ({mbti_dict.get(mbti_type, 'Tipe tidak ditemukan dalam dictionary')}), Similarity Score: {score:.4f}")
+                    st.write(f"{mbti_type} ({mbti_dict.get(mbti_type, ('Tipe tidak ditemukan dalam dictionary', 'Tidak ada deskripsi tersedia'))[0]}), Similarity Score: {score:.4f}")
 
         else:
             st.warning("Harap masukkan kalimat untuk mencari tipe MBTI.")
