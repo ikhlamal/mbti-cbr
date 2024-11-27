@@ -46,7 +46,27 @@ def find_similar_personality(input_text, tfidf_matrix, df, top_n=5):
     
     return results
 
-# 4. Streamlit User Interface
+# 4. Dictionary untuk kepanjangan MBTI
+mbti_dict = {
+    "INFJ": "Introversion, Intuition, Feeling, Judging",
+    "INFP": "Introversion, Intuition, Feeling, Perceiving",
+    "INTJ": "Introversion, Intuition, Thinking, Judging",
+    "INTP": "Introversion, Intuition, Thinking, Perceiving",
+    "ISFJ": "Introversion, Sensing, Feeling, Judging",
+    "ISFP": "Introversion, Sensing, Feeling, Perceiving",
+    "ISTJ": "Introversion, Sensing, Thinking, Judging",
+    "ISTP": "Introversion, Sensing, Thinking, Perceiving",
+    "ENFJ": "Extraversion, Intuition, Feeling, Judging",
+    "ENFP": "Extraversion, Intuition, Feeling, Perceiving",
+    "ENTJ": "Extraversion, Intuition, Thinking, Judging",
+    "ENTP": "Extraversion, Intuition, Thinking, Perceiving",
+    "ESFJ": "Extraversion, Sensing, Feeling, Judging",
+    "ESFP": "Extraversion, Sensing, Feeling, Perceiving",
+    "ESTJ": "Extraversion, Sensing, Thinking, Judging",
+    "ESTP": "Extraversion, Sensing, Thinking, Perceiving"
+}
+
+# 5. Streamlit User Interface
 def app():
     st.title('MBTI Personality Type Finder')
 
@@ -61,11 +81,17 @@ def app():
             # Menampilkan hasil dengan format yang diinginkan
             st.subheader("Hasil Tipe MBTI yang Mirip:")
             
-            for i, (mbti_type, score) in enumerate(results):
-                if i == 0:
-                    st.markdown(f"**{mbti_type}** ({score:.4f})", unsafe_allow_html=True)
-                else:
+            # Menampilkan tipe MBTI pertama dengan highlight
+            mbti_type, score = results[0]
+            st.success(f"**{mbti_type}** ({score:.4f})")
+            st.write(f"**Kepanjangan Tipe MBTI:** {mbti_dict.get(mbti_type, 'Tipe tidak ditemukan dalam dictionary')}")
+
+            # Menampilkan kemungkinan hasil lainnya
+            with st.expander("Kemungkinan hasil lainnya:"):
+                for mbti_type, score in results[1:]:
                     st.markdown(f"<small>{mbti_type} ({score:.4f})</small>", unsafe_allow_html=True)
+                    st.write(f"<small>Kepanjangan: {mbti_dict.get(mbti_type, 'Tipe tidak ditemukan dalam dictionary')}</small>", unsafe_allow_html=True)
+
         else:
             st.warning("Harap masukkan kalimat untuk mencari tipe MBTI.")
 
