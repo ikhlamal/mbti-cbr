@@ -83,14 +83,12 @@ def app():
             
             # Menampilkan tipe MBTI pertama dengan highlight
             mbti_type, score = results[0]
-            st.success(f"**{mbti_type}** ({score:.4f})")
-            st.write(f"**Kepanjangan Tipe MBTI:** {mbti_dict.get(mbti_type, 'Tipe tidak ditemukan dalam dictionary')}")
+            st.success(f"**{mbti_type}** ({mbti_dict.get(mbti_type, 'Tipe tidak ditemukan dalam dictionary')}), Similarity Score: {score:.4f}")
 
             # Menampilkan kemungkinan hasil lainnya
             with st.expander("Kemungkinan hasil lainnya:"):
                 for mbti_type, score in results[1:]:
-                    st.markdown(f"<small>{mbti_type} ({score:.4f})</small>", unsafe_allow_html=True)
-                    st.write(f"<small>Kepanjangan: {mbti_dict.get(mbti_type, 'Tipe tidak ditemukan dalam dictionary')}</small>", unsafe_allow_html=True)
+                    st.write(f"{mbti_type} ({mbti_dict.get(mbti_type, 'Tipe tidak ditemukan dalam dictionary')}), Similarity Score: {score:.4f}")
 
         else:
             st.warning("Harap masukkan kalimat untuk mencari tipe MBTI.")
