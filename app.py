@@ -71,15 +71,15 @@ def app():
     st.title('MBTI Personality Type Finder')
 
     # Input teks dari pengguna
-    input_text = st.text_area("Masukkan Kalimat Anda:", "")
+    input_text = st.text_area("Input text:", "")
     
     # Tombol untuk mencari tipe MBTI
-    if st.button('Cari Tipe MBTI'):
+    if st.button('Find MBTI Type'):
         if input_text.strip() != "":
             results = find_similar_personality(input_text, tfidf_matrix, df, top_n=5)
 
             # Menampilkan hasil dengan format yang diinginkan
-            st.subheader("Hasil Tipe MBTI yang Mirip:")
+            st.subheader("MBTI Result:")
             
             # Menampilkan tipe MBTI pertama dengan highlight
             mbti_type, score = results[0]
